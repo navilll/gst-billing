@@ -14,12 +14,13 @@
         <h5 class="mb-0">Create Product</h5>
       </div>
       <div class="card-body">
-        <form action="{{route('products.store')}}" method='POST'>
+        <form action="{{route('products.update',$product->id)}}"  method="post">
+            @method('PUT')
             @csrf
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="name">Name</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" value="{{old('name')}}" />
+                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" value="{{$product->name}}" />
                 @error('name')
                 <div id="defaultFormControlHelp" class="form-text text-danger ">{{$message}}</div>
                 @enderror
@@ -28,7 +29,7 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="size">Size</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="size" name="size" placeholder="20mm" value="{{old('size')}}" />
+                <input type="text" class="form-control" id="size" name="size" placeholder="20mm" value="{{$product->size}}" />
                 @error('size')
                 <div id="defaultFormControlHelp" class="form-text text-danger ">{{$message}}</div>
                 @enderror
@@ -37,7 +38,7 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="price">Price</label>
               <div class="col-sm-10">
-                <input type="text" id="price" class="form-control" name="price" placeholder="1000" aria-label="1000" aria-describedby="basic-default-phone" value="{{old('price')}}" />
+                <input type="text" id="price" class="form-control" name="price" placeholder="1000" aria-label="1000" aria-describedby="basic-default-phone" value="{{$product->price}}" />
                 @error('price')
                 <div id="defaultFormControlHelp" class="form-text text-danger ">{{$message}}</div>
                 @enderror
@@ -46,10 +47,10 @@
             <div class="row mb-3">
               <label for="status" class="col-sm-2 col-form-label">Status</label>
               <div class="col-sm-10">
-                <select class="form-select" id="status" name="status" aria-label="Default select example" value="{{old('status')}}">
+                <select class="form-select" id="status" name="status" aria-label="Default select example">
                   <option selected disabled>Select Status</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">InActive</option>
+                  <option value="active" {!!(($product->status)=='active' ? 'selected' : '')!!}>Active</option>
+                  <option value="inactive" {!!(($product->status)=='inactive' ? 'selected' : '')!!}>InActive</option>
                 </select>
                 @error('status')
                 <div id="defaultFormControlHelp" class="form-text text-danger ">{{$message}}</div>

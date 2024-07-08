@@ -6,6 +6,11 @@
 <h4 class="py-3 mb-4">
   <span class="text-muted fw-light">Products /</span> Listing
 </h4>
+@if(session('alert'))
+  <div class="alert alert-primary" role="alert">
+    {{session('alert')}}
+  </div>
+@endif
 
 <!-- Striped Rows -->
 <div class="card">
@@ -28,13 +33,13 @@
           <td><i class="bx bx-label bx-sm text-danger me-3"></i> <span class="fw-medium">{{$product->name}}</span></td>
           <td>{{$product->size}}</td>
           <td>{{$product->price}}</td>
-          <td><span class="badge bg-label-primary me-1">Active</span></td>
+          <td>{!!(($product->status)=='active' ? '<span class="badge bg-label-primary me-1">Active</span>' : '<span class="badge bg-label-warning me-1">InActive</span>')!!}</td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                <a class="dropdown-item" href="{{route('products.edit',$product->id)}}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                <a role="submit" class="dropdown-item" href="{{route('products.destroy',$product->id)}}"><i class="bx bx-trash me-1"></i> Delete</a>
               </div>
             </div>
           </td>
